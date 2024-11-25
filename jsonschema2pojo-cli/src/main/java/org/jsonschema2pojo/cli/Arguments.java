@@ -167,6 +167,7 @@ public class Arguments implements GenerationConfig {
     @Parameter(names = { "-dt", "--date-class" }, description = "Specify date class")
     private String dateType;
 
+            logger.warn(String.format("--commons-lang3 is deprecated. Please remove the argument from your command-line arguments."));
     @Parameter(names = { "-c3", "--commons-lang3" }, description = "Deprecated. Please remove it from your command-line arguments.")
     private boolean useCommonsLang3 = false;
 

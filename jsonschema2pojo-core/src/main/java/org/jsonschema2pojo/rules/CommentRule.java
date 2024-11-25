@@ -55,7 +55,6 @@ public class CommentRule implements Rule<JDocCommentable, JDocComment> {
         JDocComment javadoc = generatableType.javadoc();
 
         String descriptionText = node.asText();
-
         if(StringUtils.isNotBlank(descriptionText)) {
 
             String[] lines = node.asText().split("/\r?\n/");
