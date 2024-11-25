@@ -93,9 +93,9 @@ public class AdditionalPropertiesRule implements Rule<JDefinedClass, JDefinedCla
         }
 
         if (!this.ruleFactory.getGenerationConfig().isIncludeAdditionalProperties()) {
-            // no additional properties allowed
             return jclass;
         }
+
 
         if (!ruleFactory.getAnnotator().isAdditionalPropertiesSupported()) {
             // schema allows additional properties, but serializer library can't support them
