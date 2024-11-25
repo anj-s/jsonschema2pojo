@@ -12,7 +12,7 @@
     <artifactId>jsonschema2pojo</artifactId>
     <version>1.2.3-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>jsonschema2pojo</name>
     <description>Generate DTO style Java classes from JSON Schema documents</description>
     <url>https://github.com/joelittlejohn/jsonschema2pojo</url>
@@ -387,7 +387,7 @@
             <dependency>
                 <groupId>com.github.tomakehurst</groupId>
                 <artifactId>wiremock</artifactId>
-                <version>2.35.1</version>
+                <version>2.35.0</version>
                 <scope>test</scope>
                 <exclusions>
                     <exclusion>
@@ -495,6 +495,15 @@
             <dependency>
                 <groupId>org.eclipse</groupId>
                 <artifactId>yasson</artifactId>
+                <version>3.0.4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.tomakehurst</groupId>
+                <artifactId>wiremock</artifactId>
+                <version>2.35.0</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
                 <version>3.0.4</version>
             </dependency>
         </dependencies>
