@@ -44,7 +44,7 @@ public final class PrimitiveTypes {
     public static boolean isPrimitive(String name, JCodeModel owner) {
         try {
             return JType.parse(owner, name) != owner.VOID;
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException ignored) {
             return false;
         }
     }
@@ -62,7 +62,7 @@ public final class PrimitiveTypes {
     public static JPrimitiveType primitiveType(String name, JCodeModel owner) {
         try {
             return (JPrimitiveType) owner.parseType(name);
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException ignored) {
             throw new GenerationException(
                     "Given name does not refer to a primitive type, this type can't be found: "
                             + name, e);

@@ -184,13 +184,12 @@ public class DynamicPropertiesRule implements Rule<JDefinedClass, JDefinedClass>
                 }
                 JMethod propertyGetter = jclass.getMethod(getGetterName(propertyName, propertyType, node), new JType[] {});
                 propertyConditional._then()._return(invoke(propertyGetter));
-            }
+                propertyConditional._then()._return(TRUE);
         }
-
-        JClass extendsType = jclass._extends();
+        JDefinedClass extendsType = definedClassOrNullFromType(jclass._extends());
         JBlock lastBlock = propertyConditional == null ? body : propertyConditional._else();
-        if (extendsType != null && extendsType instanceof JDefinedClass) {
-            JDefinedClass parentClass = (JDefinedClass) extendsType;
+        if (extendsType!=null) {
+            JMethod parentMethod = extendsType.getMethod(DEFINED_SETTER_NAME, new JType[] { extendsType.owner()._ref(String.class), extendsType.owner()._ref(Object.class) });
             JMethod parentMethod = parentClass.getMethod(DEFINED_GETTER_NAME,
                     new JType[] { parentClass.owner()._ref(String.class), parentClass.owner()._ref(Object.class) });
             lastBlock._return(_super().invoke(parentMethod).arg(nameParam).arg(notFoundParam));
@@ -242,33 +241,28 @@ public class DynamicPropertiesRule implements Rule<JDefinedClass, JDefinedClass>
     private JMethod addPublicWithMethod(JDefinedClass jclass, JMethod internalSetMethod) {
         JMethod method = jclass.method(PUBLIC, jclass, BUILDER_NAME);
         JVar nameParam = method.param(String.class, "name");
-        JVar valueParam = method.param(Object.class, "value");
         JBlock body = method.body();
-        JBlock notFound = body._if(JOp.not(invoke(internalSetMethod).arg(nameParam).arg(valueParam)))._then();
-
-        // if we have additional properties, then put value.
-        JMethod getAdditionalProperties = jclass.getMethod("getAdditionalProperties", new JType[] {});
-        if (getAdditionalProperties != null) {
+        JDefinedClass extendsType = definedClassOrNullFromType(jclass._extends());
+        if (extendsType!=null) {
+            lastBlock._return(_super().invoke(DEFINED_GETTER_NAME).arg(nameParam).arg(notFoundParam));
             JType additionalPropertiesType = ((JClass) (getAdditionalProperties.type())).getTypeParameters().get(1);
             notFound.add(invoke(getAdditionalProperties).invoke("put").arg(nameParam)
-                    .arg(cast(additionalPropertiesType, valueParam)));
+         JBlock notFound = body._if(JOp.not(invoke(internalSetMethod).arg(nameParam).arg(valueParam)))._then();
         }
         // else throw exception.
         else {
             notFound._throw(illegalArgumentInvocation(jclass, nameParam));
         }
         body._return(_this());
-
         return method;
-    }
+         JBlock notFound = body._if(JOp.not(invoke(internalSetMethod).arg(nameParam).arg(valueParam)))._then();
 
     private JMethod addInternalSetMethodJava6(JDefinedClass jclass, JsonNode propertiesNode) {
+        JVar notFoundParam = method.param(jclass.owner()._ref(Object.class), "notFoundValue");
         JMethod method = jclass.method(PROTECTED, jclass.owner().BOOLEAN, DEFINED_SETTER_NAME);
         JVar nameParam = method.param(String.class, "name");
         JVar valueParam = method.param(Object.class, "value");
-        JBlock body = method.body();
         JConditional propertyConditional = null;
-        if (propertiesNode != null) {
             for (Iterator<Map.Entry<String, JsonNode>> properties = propertiesNode.fields(); properties.hasNext();) {
                 Map.Entry<String, JsonNode> property = properties.next();
                 String propertyName = property.getKey();
@@ -315,15 +309,23 @@ public class DynamicPropertiesRule implements Rule<JDefinedClass, JDefinedClass>
     }
 
     private void addSetProperty(JDefinedClass jclass, JBlock callSite, String propertyName, JType propertyType, JVar valueVar, JsonNode node) {
+                new JType[] { jclass.owner().ref(String.class), jclass.owner().ref(Object.class) });
         JMethod propertySetter = jclass.getMethod(getSetterName(propertyName, node), new JType[] { propertyType });
         JConditional isInstance = callSite._if(valueVar._instanceof(propertyType.boxify().erasure()));
+        isInstance._then()
         isInstance._then()
         .invoke(propertySetter).arg(cast(propertyType.boxify(), valueVar));
         isInstance._else()
         ._throw(illegalArgumentInvocation(jclass, propertyName, propertyType, valueVar));
+        ._throw(illegalArgumentInvocation(jclass, propertyName, propertyType, valueVar));
     }
 
-    private JInvocation illegalArgumentInvocation(JDefinedClass jclass, JVar propertyName) {
+        return ruleFactory.getNameHelper().getSetterName(propertyName, propertyType, node);
+    }\n+    private String getGetterName(String propertyName, JType propertyType, JsonNode node) {
+        return ruleFactory.getNameHelper().getGetterName(propertyName, propertyType, node);
+    }\n }\n')
+```diff
+ TARGET
         return _new(jclass.owner()._ref(IllegalArgumentException.class))
                 .arg(lit("property \"").plus(propertyName).plus(lit("\" is not defined")));
     }

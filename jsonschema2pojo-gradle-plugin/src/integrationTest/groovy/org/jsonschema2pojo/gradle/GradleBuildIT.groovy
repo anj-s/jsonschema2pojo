@@ -43,5 +43,6 @@ class GradleBuildIT {
       connection.close()
     }
   }
+  }
 
 }

@@ -1190,7 +1190,6 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
     public boolean isIncludeDynamicBuilders() {
         return includeDynamicBuilders;
     }
-
     @Override
     public String getDateTimeType() {
         return dateTimeType;

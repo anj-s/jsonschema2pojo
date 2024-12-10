@@ -20,7 +20,6 @@ import static java.lang.String.*;
 import static org.apache.commons.lang.StringUtils.*;
 
 import java.net.URI;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -28,7 +27,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.jsonschema2pojo.GenerationConfig;
 import org.jsonschema2pojo.Schema;
@@ -63,8 +61,8 @@ public class FormatRule implements Rule<JType, JType> {
      * This rule maps format values to Java types. By default:
      * <ul>
      * <li>"format":"date-time" =&gt; {@link java.util.Date} or {@link org.joda.time.DateTime} (if config useJodaDates is set)
-     * <li>"format":"date" =&gt; {@link String} or {@link org.joda.time.LocalDate} (if config useJodaLocalDates is set)
-     * <li>"format":"time" =&gt; {@link String} or {@link org.joda.time.LocalTime} (if config useJodaLocalTimes is set)
+     * <li>"format":"date" =&gt; {@link String}
+     * <li>"format":"time" =&gt; {@link String}
      * <li>"format":"utc-millisec" =&gt; <code>long</code>
      * <li>"format":"regex" =&gt; {@link java.util.regex.Pattern}
      * <li>"format":"color" =&gt; {@link String}
@@ -148,14 +146,6 @@ public class FormatRule implements Rule<JType, JType> {
     }
 
     private static Class<?> getDateType(GenerationConfig config) {
-        Class<?> type = tryLoadType(config.getDateType(), "data");
-        if (type != null) {
-            return type;
-        }
-        return config.isUseJodaLocalDates() ? LocalDate.class : String.class;
-    }
-
-    private static Class<?> getTimeType(GenerationConfig config) {
         Class<?> type = tryLoadType(config.getTimeType(), "time");
         if (type != null) {
             return type;
