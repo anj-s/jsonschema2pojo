@@ -101,7 +101,6 @@ public class DynamicPropertiesRule implements Rule<JDefinedClass, JDefinedClass>
         boolean isIncludeGetters = ruleFactory.getGenerationConfig().isIncludeGetters();
         boolean isIncludeSetters = ruleFactory.getGenerationConfig().isIncludeSetters();
         boolean isGenerateBuilders = ruleFactory.getGenerationConfig().isGenerateBuilders();
-
         if (isIncludeGetters || isIncludeSetters || isGenerateBuilders) {
             if (isIncludeSetters) {
                 addInternalSetMethodJava6(jclass, node);

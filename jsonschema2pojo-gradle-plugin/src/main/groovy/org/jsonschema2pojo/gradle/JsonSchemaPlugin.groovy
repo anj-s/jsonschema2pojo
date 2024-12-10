@@ -27,7 +27,7 @@ import org.gradle.api.Project
 class JsonSchemaPlugin implements Plugin<Project> {
 
   @Override
-  public void apply(Project project) {
+  void apply(Project project) {
     project.extensions.create('jsonSchema2Pojo', JsonSchemaExtension)
 
     if (project.plugins.hasPlugin('java')) {

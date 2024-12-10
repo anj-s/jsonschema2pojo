@@ -133,7 +133,7 @@ public class ReflectionHelper {
    */
   public JFieldVar searchClassAndSuperClassesForField(String property, JDefinedClass jclass) {
     Map<String, JFieldVar> fields = jclass.fields();
-    JFieldVar field = fields.get(property);
+      JFieldVar field = fields.get(property);
     if (field == null) {
       return searchSuperClassesForField(property, jclass);
     }

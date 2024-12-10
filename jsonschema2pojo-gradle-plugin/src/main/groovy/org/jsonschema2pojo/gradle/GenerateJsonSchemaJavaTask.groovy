@@ -32,7 +32,6 @@ import org.gradle.api.tasks.TaskAction
 class GenerateJsonSchemaJavaTask extends DefaultTask {
   @ReplacedBy("configurationString")
   GenerationConfig configuration
-
   @Input
   String getConfigurationString() {
     configuration.toString();

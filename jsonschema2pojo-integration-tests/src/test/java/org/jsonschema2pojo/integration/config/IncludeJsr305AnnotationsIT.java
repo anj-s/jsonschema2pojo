@@ -42,6 +42,8 @@ public class IncludeJsr305AnnotationsIT {
     private final boolean useJakartaValidation;
     @Rule
     public Jsonschema2PojoRule schemaRule = new Jsonschema2PojoRule();
+    private final Class<? extends Annotation> nonnullClass;
+    private final Class<? extends Annotation> nullableClass;
 
     @Parameterized.Parameters
     public static Collection<Object> data() {
@@ -51,6 +53,7 @@ public class IncludeJsr305AnnotationsIT {
     public IncludeJsr305AnnotationsIT(boolean useJakartaValidation) {
         this.useJakartaValidation = useJakartaValidation;
     }
+        this.nonnullClass = useJakartaValidation ? NotNull.class : javax.validation.constraints.NotNull.class;
 
     @Test
     public void jsrAnnotationsAreNotIncludedByDefault() {
@@ -127,7 +130,7 @@ public class IncludeJsr305AnnotationsIT {
                                                                        config("includeJsr305Annotations", true));
 
         Class generatedType = resultsClassLoader.loadClass("com.example.Nested");
-
+    }
         validateNonnullField(generatedType.getDeclaredField("requiredProperty"));
         validateNullableField(generatedType.getDeclaredField("nonRequiredProperty"));
     }

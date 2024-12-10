@@ -82,10 +82,10 @@ public class AntRuleLogger extends AbstractRuleLogger {
 
   private void log(String msg, Throwable e, int level, String levelPrefix) {
     if (task != null && task.getProject() != null) {
-      if(e != null) {
+      if (e != null) {
         task.getProject().log(msg, e, level);
       } else {
-        task.getProject().log(msg, level);
+        task.getProject().log(msg, level, null);
       }
     } else {
       System.err.println(levelPrefix + msg);

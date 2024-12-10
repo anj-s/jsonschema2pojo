@@ -91,6 +91,14 @@ public class Jsonschema2Pojo {
         }
     }
     
+
+    private static void removeOldOutput(File targetDirectory) {
+        if (targetDirectory.exists()) {
+            for (File f : targetDirectory.listFiles()) {
+                delete(f);
+            }
+        }
+    }
     private static ContentResolver createContentResolver(GenerationConfig config) {
         if (config.getSourceType() == SourceType.YAMLSCHEMA || config.getSourceType() == SourceType.YAML) {
             return new ContentResolver(new YAMLFactory());
@@ -145,7 +153,6 @@ public class Jsonschema2Pojo {
         return isEmpty(parentQualifiedName) ? safeChildName : parentQualifiedName + "." + safeChildName;
     }
 
-    private static void removeOldOutput(File targetDirectory) {
         if (targetDirectory.exists()) {
             for (File f : targetDirectory.listFiles()) {
                 delete(f);

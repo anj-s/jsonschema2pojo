@@ -27,7 +27,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.util.StringJoiner;
 
-import org.jsonschema2pojo.integration.util.Jsonschema2PojoRule;
+ import org.jsonschema2pojo.integration.util.Jsonschema2PojoRule;
 import org.junit.Rule;
 import org.junit.Test;
 
