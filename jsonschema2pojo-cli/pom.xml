@@ -30,6 +30,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
                 <configuration>
                     <!-- 
                         Fixes filtering in files that contain single '@' characters (e.g. .bat files 
@@ -43,9 +44,11 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
             </plugin>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -58,6 +61,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.8.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -74,6 +78,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <id>attach-artifacts</id>
@@ -109,11 +114,7 @@
         <dependency>
             <groupId>com.beust</groupId>
             <artifactId>jcommander</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
+            <version>1.84</version>
         </dependency>
 
         <dependency>
@@ -127,6 +128,17 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+            <version>5.14.2</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.json.bind</groupId>
+            <artifactId>jakarta.json.bind-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
     </dependencies>
 </project>
