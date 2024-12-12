@@ -40,8 +40,8 @@ class GenerateJsonSchemaAndroidTask extends SourceTask {
     // If the whole thing isn't incremental, delete the build folder (if it exists)
     if (!inputs.isIncremental() && outputDir.exists()) {
       logger.debug("JsonSchema2Pojo generation is not incremental; deleting build folder and starting fresh!")
-      outputDir.deleteDir()
-    }
+      outputDir.deleteDir()     }
+
 
     if (!outputDir.exists()) {
       outputDir.mkdirs()

@@ -20,7 +20,6 @@ import static java.util.Arrays.*;
 import static org.apache.commons.lang3.StringUtils.*;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,7 +40,6 @@ public class ContentResolver {
     
     private final ObjectMapper objectMapper;
 
-    public ContentResolver() {
         this(null);
     }
 
@@ -84,20 +82,14 @@ public class ContentResolver {
 
     private JsonNode resolveFromClasspath(URI uri) {
 
-        String path = removeStart(removeStart(uri.toString(), uri.getScheme() + ":"), "/");
-        InputStream contentAsStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
-
-        if (contentAsStream == null) {
-            throw new IllegalArgumentException("Couldn't read content from the classpath, file not found: " + uri);
-        }
-
         try {
-            return objectMapper.readTree(contentAsStream);
+            return objectMapper.readTree(Thread.currentThread().getContextClassLoader().getResource(
+                    removeStart(removeStart(uri.toString(), uri.getScheme() + ":"), "/")
+            ).openStream());
         } catch (JsonProcessingException e) {
             throw new IllegalArgumentException("Error parsing document: " + uri, e);
         } catch (IOException e) {
-            throw new IllegalArgumentException("Unrecognised URI, can't resolve this: " + uri, e);
+            throw new IllegalArgumentException("Couldn't read content from the classpath, file not found: " + uri, e);
         }
-    }
 
 }

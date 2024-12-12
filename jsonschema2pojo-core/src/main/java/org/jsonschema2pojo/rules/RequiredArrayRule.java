@@ -76,7 +76,6 @@ public class RequiredArrayRule implements Rule<JDefinedClass, JDefinedClass> {
                 continue;
             }
 
-            addJavaDoc(field);
 
             if (ruleFactory.getGenerationConfig().isIncludeJsr303Annotations()) {
                 addNotNullAnnotation(field);
@@ -103,7 +102,6 @@ public class RequiredArrayRule implements Rule<JDefinedClass, JDefinedClass> {
             }
         }
     }
-
     private void addNotNullAnnotation(JFieldVar field) {
         final Class<? extends Annotation> notNullClass
                 = ruleFactory.getGenerationConfig().isUseJakartaValidation()

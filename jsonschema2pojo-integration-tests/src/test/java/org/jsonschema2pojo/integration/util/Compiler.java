@@ -44,7 +44,7 @@ import org.eclipse.jdt.internal.compiler.tool.EclipseCompiler;
  */
 public class Compiler {
 
-    public void compile(File sourceDirectory, File outputDirectory, List<File> classpath, String targetVersion ) {
+    public void compile(File sourceDirectory, File outputDirectory, List<File> classpath, String targetVersion ) throws RuntimeException {
       compile(null, null, sourceDirectory, outputDirectory, classpath, null, targetVersion);
     }
 

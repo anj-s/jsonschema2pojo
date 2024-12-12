@@ -67,17 +67,14 @@ public class RequiredRule implements Rule<JDocCommentable, JDocCommentable> {
     public JDocCommentable apply(String nodeName, JsonNode node, JsonNode parent, JDocCommentable generatableType, Schema schema) {
 
         if (node.asBoolean()) {
-            generatableType.javadoc().append("\n(Required)");
-
-            if (ruleFactory.getGenerationConfig().isIncludeJsr303Annotations()
-                    && generatableType instanceof JFieldVar) {
-                final Class<? extends Annotation> notNullClass
-                        = ruleFactory.getGenerationConfig().isUseJakartaValidation()
-                        ? NotNull.class
-                        : javax.validation.constraints.NotNull.class;
+            generatableType.javadoc().append("\\n(Required)");
+            if (ruleFactory.getGenerationConfig().isIncludeJsr303Annotations() && generatableType instanceof JFieldVar) {
+                final Class<? extends Annotation> notNullClass = ruleFactory.getGenerationConfig().isUseJakartaValidation() ? NotNull.class : javax.validation.constraints.NotNull.class;
                 ((JFieldVar) generatableType).annotate(notNullClass);
             }
-
+            if (ruleFactory.getGenerationConfig().isIncludeJsr305Annotations() && generatableType instanceof JFieldVar) {
+                ((JFieldVar) generatableType).annotate(Nonnull.class);
+            }
             if (ruleFactory.getGenerationConfig().isIncludeJsr305Annotations()
                     && generatableType instanceof JFieldVar) {
                 ((JFieldVar) generatableType).annotate(Nonnull.class);

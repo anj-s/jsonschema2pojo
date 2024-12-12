@@ -41,7 +41,6 @@ import com.sun.codemodel.JMod;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JTypeVar;
 import com.sun.codemodel.JVar;
-
 public class SerializableHelper {
     private static final Comparator<JClass> INTERFACE_COMPARATOR =
             new Comparator<JClass>() {

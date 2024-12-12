@@ -610,7 +610,7 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
      * about generating source code that may be incompatible with older JVMs. Acceptable values
      * include e.g. 1.6, 1.8, 8, 9, 10, 11.
      * <p/>
-     * If not set, the value of targetVersion is auto-detected. For auto-detection, the first
+     * If not set, the value of targetVersion is auto-detected. For auto-detection, the first value found in the following list will be used:
      * value found in the following list will be used:
      * <ol>
      *     <li>maven.compiler.source property</li>
