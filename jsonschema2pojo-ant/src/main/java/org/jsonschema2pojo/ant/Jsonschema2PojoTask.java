@@ -295,7 +295,6 @@ public class Jsonschema2PojoTask extends Task implements GenerationConfig {
      * This is a legacy configuration option used to turn on the {@link #isIncludeRequiredPropertiesConstructor()}
      * and off the {@link #isIncludeAllPropertiesConstructor()} configuration options.
      * It is specifically tied to the {@link #isIncludeConstructors()} property, and will do nothing if that property is not enabled
-     *
      * @param constructorsRequiredPropertiesOnly controls whether the resulting class will have only the constructor with required or all properties
      */
     public void setConstructorsRequiredPropertiesOnly(boolean constructorsRequiredPropertiesOnly) {

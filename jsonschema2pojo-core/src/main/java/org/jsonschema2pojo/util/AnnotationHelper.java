@@ -29,13 +29,23 @@ public class AnnotationHelper {
     private static final String GENERATOR_NAME = "jsonschema2pojo";
 
     private static boolean tryToAnnotate(JDefinedClass jclass, String annotationClassName) {
-        try {
             Class.forName(annotationClassName);
             JClass annotationClass = jclass.owner().ref(annotationClassName);
             JAnnotationUse generated = jclass.annotate(annotationClass);
             generated.param("value", GENERATOR_NAME);
             return true;
         } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+    public static void addGeneratedAnnotation(GenerationConfig config, JDefinedClass jclass) {
+            generated.param("value", GENERATOR_NAME);
+        if (JavaVersion.is9OrLater(config.getTargetVersion())) {
+            tryToAnnotate(jclass, JAVA_9_GENERATED);
+        } else {
+            tryToAnnotate(jclass, JAVA_8_GENERATED);
+        }
+    }
             return false;
         }
 

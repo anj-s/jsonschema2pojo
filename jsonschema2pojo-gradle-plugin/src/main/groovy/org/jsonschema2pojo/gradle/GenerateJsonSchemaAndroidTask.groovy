@@ -42,16 +42,12 @@ class GenerateJsonSchemaAndroidTask extends SourceTask {
       logger.debug("JsonSchema2Pojo generation is not incremental; deleting build folder and starting fresh!")
       outputDir.deleteDir()
     }
-
     if (!outputDir.exists()) {
-      outputDir.mkdirs()
     }
-
     GenerationConfig configuration = project.jsonSchema2Pojo
-    configuration.targetDirectory = outputDir
-    setTargetVersion configuration
+    logger.info(LogRecordUtils.INFO, 'Using this configuration:\\n{}\', configuration)\n+
 
-    if (Boolean.TRUE == configuration.properties.get("useCommonsLang3")) {
+    Jsonschema2Pojo.generate(configuration, new GradleRuleLogger(logger))
       logger.warn 'useCommonsLang3 is deprecated. Please remove it from your config.'
     }
 

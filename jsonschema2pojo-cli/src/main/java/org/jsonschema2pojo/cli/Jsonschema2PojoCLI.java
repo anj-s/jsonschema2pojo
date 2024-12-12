@@ -19,6 +19,7 @@ package org.jsonschema2pojo.cli;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.jsonschema2pojo.LogRecordUtils;
 import org.jsonschema2pojo.Jsonschema2Pojo;
 
 /**
@@ -44,10 +45,10 @@ public final class Jsonschema2PojoCLI {
      */
     public static void main(String[] args) throws IOException {
         Arguments arguments = new Arguments().parse(args);
-        CommandLineLogger logger = new CommandLineLogger(arguments.getLogLevel());
+        RuleLogger logger = new CommandLineLogger(arguments.getLogLevel());
 
         if (arguments.isPrintLogLevels()) {
-            logger.printLogLevels();
+            ((CommandLineLogger) logger).printLogLevels();
             arguments.exit(0);
         }
 

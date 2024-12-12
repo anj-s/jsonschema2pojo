@@ -40,22 +40,16 @@ class GenerateJsonSchemaJavaTask extends DefaultTask {
 
   GenerateJsonSchemaJavaTask() {
     description = 'Generates Java classes from a json schema.'
-    group = 'Build'
 
-    project.afterEvaluate {
       configuration = project.jsonSchema2Pojo
-      configuration.targetDirectory = configuration.targetDirectory ?:
         project.file("${project.buildDir}/generated-sources/js2p")
-
       if (project.plugins.hasPlugin('java')) {
         configureJava()
       } else {
-        throw new GradleException('generateJsonSchema: Java plugin is required')
       }
-      outputs.dir configuration.targetDirectory
-      setTargetVersion configuration
+    logger.info(LogRecordUtils.INFO, \'Using this configuration:\\n{}\', configuration)\n+
 
-      inputs.property("configuration", configuration.toString())
+    Jsonschema2Pojo.generate(configuration, new GradleRuleLogger(logger))
       inputs.files project.files(configuration.source.findAll { 'file'.equals(it.protocol) })
     }
   }

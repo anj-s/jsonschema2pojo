@@ -106,7 +106,7 @@ public class Compiler {
 
     public static JavaCompiler systemJavaCompiler() {
       return ToolProvider.getSystemJavaCompiler();
-    }
+     }
 
     public static JavaCompiler eclipseCompiler() {
       return new EclipseCompiler();

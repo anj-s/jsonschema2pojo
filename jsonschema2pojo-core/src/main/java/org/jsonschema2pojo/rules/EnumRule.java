@@ -439,10 +439,8 @@ public class EnumRule implements Rule<JClassContainer, JType> {
         JBlock body = toString.body();
 
         JExpression toReturn = JExpr._this().ref(valueField);
-        if(!isString(valueField.type())){
-            toReturn = toReturn.plus(JExpr.lit(""));
+        if(!isString(valueField.type())) {
         }
-
         body._return(toReturn);
 
         toString.annotate(Override.class);

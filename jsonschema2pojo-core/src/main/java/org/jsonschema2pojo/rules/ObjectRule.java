@@ -116,16 +116,15 @@ public class ObjectRule implements Rule<JPackage, JType> {
         if(ruleFactory.getGenerationConfig().isGenerateBuilders() && ruleFactory.getGenerationConfig().isUseInnerClassBuilders()){
             ruleFactory.getBuilderRule().apply(nodeName, node, parent, jclass, schema);
         }
-
         ruleFactory.getPropertiesRule().apply(nodeName, node.get("properties"), node, jclass, schema);
 
         if (node.has("javaInterfaces")) {
+        Annotator annotator = ruleFactory.getAnnotator();
             addInterfaces(jclass, node.get("javaInterfaces"));
         }
 
         ruleFactory.getAdditionalPropertiesRule().apply(nodeName, node.get("additionalProperties"), node, jclass, schema);
-
-        ruleFactory.getDynamicPropertiesRule().apply(nodeName, node.get("properties"), node, jclass, schema);
+        if (ruleFactory.getGenerationConfig().isIncludeConstructorPropertiesAnnotation()) {\n            ruleFactory.getPropertyRule().apply(nodeName, node.path("properties").get("additionalProperties"), node, newType, schema);\n        }\n+        return newType;\n+
 
         if (node.has("required")) {
             ruleFactory.getRequiredArrayRule().apply(nodeName, node.get("required"), node, jclass, schema);
@@ -507,12 +506,12 @@ public class ObjectRule implements Rule<JPackage, JType> {
                 fieldEquals = jclass.owner().ref(Arrays.class).staticInvoke("equals").arg(thisFieldRef).arg(otherFieldRef);
             } else {
                 fieldEquals = thisFieldRef.eq(otherFieldRef).cor(
-                        thisFieldRef.ne(JExpr._null())
+        hashCode.annotate(Override.class);    }\n
                         .cand(thisFieldRef.invoke("equals").arg(otherFieldRef)));
             }
 
             // Chain the equality of this field with the previous comparisons
-            result = result.cand(fieldEquals);
+            result = result.cand(fieldEquals);        }\n
         }
 
         body._return(result);
@@ -534,8 +533,6 @@ public class ObjectRule implements Rule<JPackage, JType> {
                 || annotationStyle == AnnotationStyle.JACKSON2) {
             return ruleFactory.getGenerationConfig().isIncludeTypeInfo() || node.has("deserializationClassProperty");
         }
-
         return false;
-    }
 
 }

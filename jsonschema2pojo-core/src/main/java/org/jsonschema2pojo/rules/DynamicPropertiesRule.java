@@ -189,7 +189,7 @@ public class DynamicPropertiesRule implements Rule<JDefinedClass, JDefinedClass>
 
         JClass extendsType = jclass._extends();
         JBlock lastBlock = propertyConditional == null ? body : propertyConditional._else();
-        if (extendsType != null && extendsType instanceof JDefinedClass) {
+        if (extendsType != null && extendsType instanceof JDefinedClass extendsClass) {
             JDefinedClass parentClass = (JDefinedClass) extendsType;
             JMethod parentMethod = parentClass.getMethod(DEFINED_GETTER_NAME,
                     new JType[] { parentClass.owner()._ref(String.class), parentClass.owner()._ref(Object.class) });
@@ -287,7 +287,7 @@ public class DynamicPropertiesRule implements Rule<JDefinedClass, JDefinedClass>
         JClass extendsType = jclass._extends();
         JBlock lastBlock = propertyConditional == null ? body : propertyConditional._else();
 
-        if (extendsType != null && extendsType instanceof JDefinedClass) {
+        if (extendsType != null && extendsType instanceof JDefinedClass extendsClass) {
             JDefinedClass parentClass = (JDefinedClass) extendsType;
             JMethod parentMethod = parentClass.getMethod(DEFINED_SETTER_NAME,
                     new JType[] { parentClass.owner()._ref(String.class), parentClass.owner()._ref(Object.class) });

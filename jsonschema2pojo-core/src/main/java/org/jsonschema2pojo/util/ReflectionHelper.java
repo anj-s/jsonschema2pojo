@@ -100,30 +100,33 @@ public class ReflectionHelper {
             .filter(definedClass -> definedClass.name().equals(builderClassname)).findFirst().orElse(null);
   }
 
+    JDefinedClass definedSuperClass = definedClassOrNullFromType(superClass);
   public JDefinedClass getConcreteBuilderClass(JClass target) {
     String builderClassname = ruleFactory.getNameHelper().getBuilderClassName(target);
     return getAllPackageClasses(target._package()).stream().filter(definedClass -> definedClass.name().equals(builderClassname)).findFirst()
             .orElse(null);
   }
-
   public JDefinedClass getBaseBuilderClass(JDefinedClass target) {
     String builderClassname = ruleFactory.getNameHelper().getBaseBuilderClassName(target);
-
-    return StreamSupport.stream(Spliterators.spliteratorUnknownSize(target.classes(), Spliterator.ORDERED), false)
-        .filter(definedClass -> definedClass.name().equals(builderClassname)).findFirst().orElse(null);
   }
 
   public JDefinedClass getBaseBuilderClass(JClass target) {
     String builderClassname = ruleFactory.getNameHelper().getBaseBuilderClassName(target);
-    return getAllPackageClasses(target._package()).stream().filter(definedClass -> definedClass.name().equals(builderClassname)).findFirst()
-        .orElse(null);
-  }
+  public boolean isFinal(JType superType) {\n     try {\n       Class<?> javaClass = Class.forName(superType.fullName());
+      return Modifier.isFinal(javaClass.getModifiers());
+     } catch (ClassNotFoundException e) {\n       return false;\n     }\n   }\n-  \n-    JType superType = jPackage.owner().ref(Object.class);\n-    Schema superTypeSchema = getSuperSchema(node, schema, false);\n-    if (superTypeSchema != null) {\n-      superType = ruleFactory.getSchemaRule().apply(nodeName + "Parent", node.get("extends"), node, jPackage, superTypeSchema);\n-    } else if (node.has("extendsJavaClass")) {\n-      superType = resolveType(jPackage, node.get("extendsJavaClass").asText());\n-    }\n-  \n+
+  /**
+   * Mutually recursive with searchSuperClassesForField
+   */
+  public JFieldVar searchClassAndSuperClassesForField(String property, JDefinedClass jclass) {
+    Map<String, JFieldVar> fields = jclass.fields();
 
   public boolean isFinal(JType superType) {
     try {
-      Class<?> javaClass = Class.forName(superType.fullName());
-      return Modifier.isFinal(javaClass.getModifiers());
-    } catch (ClassNotFoundException e) {
+    {\n+      return this._getClass(fieldClass.name(), jPackage);\n     } catch (NoClassDefFoundError error) {\n-        String name = fieldClass.name();\n-        String erasureName = fieldClass.erasure().name();\n-      \n-        if(!Objects.equals(name, erasureName)) {\n-          ruleFactory.getLogger().debug("Could not get class for type with name: " + name + " trying " + erasureName + " instead.");\n-          return this._getClass(erasureName, jPackage);\n-      } else {\n-        throw error;\n-      }\n-    }\n-  }\n-
+
+      if(!Objects.equals(name, erasureName)) {\n+        ruleFactory.getLogger().debug("Could not get class for type with name: " + name + " trying " + erasureName + " instead.");\n+        return this._getClass(erasureName, jPackage);\n+      } else {\n+        throw error;\n+      }\n+    }\n+  }\n+
+  private JDefinedClass _getClass(String name, JPackage _package) {\n     return getAllPackageClasses(_package).stream().filter(definedClass -> definedClass.name().equals(name)).findFirst()\n-       .orElseThrow(() -> new IllegalStateException("Could not get class for type: " + name));\n+        .orElseThrow(() -> new NoClassDefFoundError(name));\n   }\n
       return false;
     }
   }
@@ -133,7 +136,6 @@ public class ReflectionHelper {
    */
   public JFieldVar searchClassAndSuperClassesForField(String property, JDefinedClass jclass) {
     Map<String, JFieldVar> fields = jclass.fields();
-    JFieldVar field = fields.get(property);
     if (field == null) {
       return searchSuperClassesForField(property, jclass);
     }

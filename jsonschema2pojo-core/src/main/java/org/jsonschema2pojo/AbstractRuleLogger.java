@@ -69,10 +69,9 @@ public abstract class AbstractRuleLogger implements RuleLogger {
   abstract protected void doDebug(String msg);
 
   abstract protected void doError(String msg, Throwable e);
-
+    if (isWarnEnabled())
   abstract protected void doInfo(String msg);
-
   abstract protected void doTrace(String msg);
-
+  abstract protected void doError(String msg, Throwable e);
   abstract protected void doWarn(String msg, Throwable e);
 }
