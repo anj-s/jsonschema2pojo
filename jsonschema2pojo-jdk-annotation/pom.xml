@@ -27,7 +27,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
+                        <version>3.1.0</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -40,7 +40,7 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.5.0</version>
+                        <version>3.11.2</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -52,7 +52,7 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>3.2.1</version>
+                        <version>3.3.1</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -66,5 +66,93 @@
             </build>
         </profile>
     </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.84</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.18.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.18.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>2.36.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>8.1.0-alpha10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>annotations</artifactId>
+            <version>3.0.1u2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.javaparser</groupId>
+            <artifactId>javaparser</artifactId>
+            <version>3.28.12</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.moshi</groupId>
+            <artifactId>moshi</artifactId>
+            <version>1.15.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.9.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.17.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jdt.core.compiler</groupId>
+            <artifactId>ecj</artifactId>
+            <version>3.40.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.el</artifactId>
+            <version>5.0.0-M1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>9.0.0.Beta3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.14.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.robolectric</groupId>
+            <artifactId>robolectric</artifactId>
+            <version>4.14.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+    </dependencies>
 
 </project>
